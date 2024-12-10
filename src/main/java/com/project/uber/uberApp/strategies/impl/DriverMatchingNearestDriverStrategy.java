@@ -1,6 +1,5 @@
 package com.project.uber.uberApp.strategies.impl;
 
-import com.project.uber.uberApp.dto.RideRequestDto;
 import com.project.uber.uberApp.entities.Driver;
 import com.project.uber.uberApp.entities.RideRequest;
 import com.project.uber.uberApp.repositories.DriverRepository;
@@ -16,6 +15,6 @@ public class DriverMatchingNearestDriverStrategy implements DriverMatchingStrate
     private final DriverRepository driverRepository;
     @Override
     public List<Driver> findMatchingDrivers(RideRequest rideRequest) {
-        return driverRepository.findMatchingDrivers(rideRequest.getPickupLocation());
+        return driverRepository.findTenNearestDrivers(rideRequest.getPickupLocation());
     }
 }
