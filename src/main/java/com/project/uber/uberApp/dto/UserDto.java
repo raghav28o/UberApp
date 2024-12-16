@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class  UserDto {
     private String name;
     private String email;
 
