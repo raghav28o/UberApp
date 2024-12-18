@@ -14,11 +14,20 @@ import java.util.List;
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, Long> {
 
-    @Query("select d.*, ST_DISTANCE(d.current_location, :pickupLocation) AS distance " +
-            " from drivers AS d " +
-            "where available = true and ST_WITHIN(d.current_location, :pickupLocation, 10000) " +
+//    @Query(value = "select d.*, ST_DISTANCE(d.current_location, :pickupLocation) AS distance " +
+//            " from driver AS d " +
+//            "where available = true and ST_WITHIN(d.current_location, :pickupLocation, 10000) " +
+//            "ORDER BY distance " +
+//            "LIMIT 10", nativeQuery = true)
+//    // : means it will take pickup from parameter
+//    List<Driver> findTenNearestDrivers(Point pickupLocation);
+
+    @Query(value = "SELECT d.*, ST_Distance(d.current_location, :pickupLocation) AS distance " +
+            "FROM driver AS d " +
+            "WHERE d.available = true " +
+            "AND ST_DWithin(d.current_location, :pickupLocation, 10000) " +
             "ORDER BY distance " +
-            "LIMIT 10")
-    // : means it will take pickup from parameter
+            "LIMIT 10", nativeQuery = true)
+// Accepts a Point parameter
     List<Driver> findTenNearestDrivers(Point pickupLocation);
 }

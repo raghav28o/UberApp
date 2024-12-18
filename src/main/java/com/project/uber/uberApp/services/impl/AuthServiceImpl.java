@@ -6,6 +6,7 @@ import com.project.uber.uberApp.dto.UserDto;
 import com.project.uber.uberApp.entities.Rider;
 import com.project.uber.uberApp.entities.User;
 import com.project.uber.uberApp.entities.enums.Role;
+import com.project.uber.uberApp.exceptions.RuntimeConflictException;
 import com.project.uber.uberApp.repositories.UserRepository;
 import com.project.uber.uberApp.services.AuthService;
 import com.project.uber.uberApp.services.RiderService;
@@ -29,10 +30,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDto signup(SignupDto signupDto) {
-        User user = userRepository.findByEmail(signupDto.getEmail());
-        if(user !=null){
-            throw new RuntimeException("user already exist with email"+signupDto.getEmail());
-        }
+        User user = userRepository.findByEmail(signupDto.getEmail()).orElse(null);
+        if(user != null)
+            throw new RuntimeConflictException("Cannot signup, User already exists with email "+signupDto.getEmail());
+
         User mappedUser = modelMapper.map(signupDto, User.class);
         mappedUser.setRoles(Set.of(Role.RIDER));
         User savedUser = userRepository.save(mappedUser);
