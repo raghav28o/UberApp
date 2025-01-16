@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.awt.*;
 import java.util.List;
+import org.locationtech.jts.geom.Point;
 
 //ST_DISTANCE
 //ST-DWITHIN
@@ -14,16 +15,8 @@ import java.util.List;
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, Long> {
 
-//    @Query(value = "select d.*, ST_DISTANCE(d.current_location, :pickupLocation) AS distance " +
-//            " from driver AS d " +
-//            "where available = true and ST_WITHIN(d.current_location, :pickupLocation, 10000) " +
-//            "ORDER BY distance " +
-//            "LIMIT 10", nativeQuery = true)
-//    // : means it will take pickup from parameter
-//    List<Driver> findTenNearestDrivers(Point pickupLocation);
-
     @Query(value = "SELECT d.*, ST_Distance(d.current_location, :pickupLocation) AS distance " +
-            "FROM drivers AS d " +
+            "FROM driver AS d " +
             "WHERE d.available = true " +
             "AND ST_DWithin(d.current_location, :pickupLocation, 10000) " +
             "ORDER BY distance " +
@@ -32,8 +25,8 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     List<Driver> findTenNearestDrivers(Point pickupLocation);
 
     @Query(value = "Select d.* " +
-            "FROM drivers d " +
-            "WHERE d.available = true AND ST_DWithin(d.current_location, :pickupLocation, 150000 " +
+            "FROM driver d " +
+            "WHERE d.available = true AND ST_DWithin(d.current_location, :pickupLocation, 15000) " +
             "ORDER BY d.rating DESC " +
             "LIMIT 10", nativeQuery = true)
     List<Driver> findTenNearbytTopRatedDrivers(Point pickupLocation);

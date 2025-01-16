@@ -7,5 +7,5 @@ import com.project.uber.uberApp.entities.RideRequest;
 import java.util.List;
 
 public interface DriverMatchingStrategy {
- List<Driver> findMatchingDrivers(RideRequest rideRequest);
+ List<Driver> findMatchingDriver(RideRequest rideRequest);
 }

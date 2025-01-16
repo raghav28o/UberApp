@@ -17,7 +17,11 @@ public class DriverMatchingHighestRatedDriverStrategy implements DriverMatchingS
 
     private final DriverRepository driverRepository;
     @Override
-    public List<Driver> findMatchingDrivers(RideRequest rideRequest) {
-        return driverRepository.findTenNearbytTopRatedDrivers(rideRequest.getPickupLocation());
+    public List<Driver> findMatchingDriver(RideRequest rideRequest) {
+        System.out.println("Testing12");
+        System.out.println("pickupLocation: "+rideRequest.getPickupLocation());
+        List<Driver> driver = driverRepository.findTenNearbytTopRatedDrivers(rideRequest.getPickupLocation());
+        System.out.println("DriverFinal: "+ driver);
+        return driver;
     }
 }
