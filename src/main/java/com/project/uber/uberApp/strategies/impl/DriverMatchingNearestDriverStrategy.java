@@ -6,6 +6,7 @@ import com.project.uber.uberApp.repositories.DriverRepository;
 import com.project.uber.uberApp.strategies.DriverMatchingStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.locationtech.jts.geom.Point;
 
 import java.util.List;
 @Service
@@ -14,7 +15,8 @@ public class DriverMatchingNearestDriverStrategy implements DriverMatchingStrate
 
     private final DriverRepository driverRepository;
     @Override
-    public List<Driver> findMatchingDrivers(RideRequest rideRequest) {
+    public List<Driver> findMatchingDriver(RideRequest rideRequest) {
+        System.out.println("Testing11");
         return driverRepository.findTenNearestDrivers(rideRequest.getPickupLocation());
     }
 }

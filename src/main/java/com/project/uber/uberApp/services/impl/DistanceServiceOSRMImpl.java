@@ -7,16 +7,18 @@ import org.springframework.web.client.RestClient;
 
 import java.awt.*;
 import java.util.List;
+import org.locationtech.jts.geom.Point;
+
 
 @Service
 public class DistanceServiceOSRMImpl implements DistanceService {
 
-    private final String OSRM_API_BASE_URL = "http://router.project-osrm.org/route/v1/driving/13.388860,52.517037;13.397634,52.529407";
+    private static final String OSRM_API_BASE_URL = "https://router.project-osrm.org/route/v1/driving/";
     @Override
     public double calculateDistance(Point src, Point dest) {
         // Call 3rd party api to OSRM to fetch distance
         try{
-            String uri = src.getX()+","+ src.getY()+","+dest.getX()+","+dest.getY();
+            String uri = src.getX()+","+ src.getY()+";"+dest.getX()+","+dest.getY();
             OSRMResponseDto responseDto =  RestClient.builder()
                     .baseUrl(OSRM_API_BASE_URL)
                     .build()
