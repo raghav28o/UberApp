@@ -37,14 +37,12 @@ public class RiderServiceImpl implements RiderService {
     @Override
     @Transactional
     public RideRequestDto requestRide(RideRequestDto rideRequestDto) {
-        System.out.println("1");
         Rider rider = getCurrentRider();
-        System.out.println("2");
         RideRequest rideRequest = modelMapper.map(rideRequestDto,RideRequest.class);
         System.out.println("3");
         rideRequest.setRideRequestStatus(RideRequestStatus.PENDING);
         rideRequest.setRider(rider);
-        System.out.println("5");
+        System.out.println("riderAt: "+rider.toString());
         log.info(rideRequest.toString());
 
         Double fare = rideStrategyManager.rideFareCalculationStrategy().calculateFare(rideRequest);
@@ -54,6 +52,7 @@ public class RiderServiceImpl implements RiderService {
         RideRequest savedRideRequest = rideRequestRepository.save(rideRequest);
         System.out.println("Testing9");
         List<Driver> drivers = rideStrategyManager.driverMatchingStrategy(rider.getRating()).findMatchingDriver(rideRequest);
+        System.out.println("riderAt: "+rideRequest.toString());
         System.out.println("10");
 
         return modelMapper.map(savedRideRequest,RideRequestDto.class);
@@ -76,7 +75,7 @@ public class RiderServiceImpl implements RiderService {
 
     @Override
     public List<RideDto> getAllMyRides() {
-        return null;
+        return List.of();
     }
 
     @Override

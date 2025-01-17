@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @Builder
 @NoArgsConstructor
+@Data
 @AllArgsConstructor
 public class Rider {
 
