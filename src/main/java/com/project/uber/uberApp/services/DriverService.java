@@ -1,17 +1,30 @@
 package com.project.uber.uberApp.services;
 
 import com.project.uber.uberApp.dto.DriverDto;
+import com.project.uber.uberApp.dto.RideDto;
 import com.project.uber.uberApp.dto.RiderDto;
+import com.project.uber.uberApp.entities.Driver;
 
 import java.util.List;
 
 public interface DriverService {
-    RiderDto acceptRide(Long rideId);
-    RiderDto cancelRide(Long rideId);
+    RideDto acceptRide(Long rideRequestId);
+
+    RideDto cancelRide(Long rideId);
+
     RiderDto startRide(Long rideId);
-    RiderDto endRide(Long rideId);
+
+    RideDto startRide(Long rideId, String otp);
+
+    RideDto endRide(Long rideId);
+
     RiderDto rateRider(Long rideId, Integer rating);
 
     DriverDto getMyProfile();
-    List<RiderDto> getAllRides();
+
+    List<RideDto> getAllRides();
+
+    List<RideDto> getAllMyRides();
+
+    Driver getCurrentDriver();
 }
