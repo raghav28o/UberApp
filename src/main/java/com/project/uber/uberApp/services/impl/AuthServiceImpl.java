@@ -3,7 +3,6 @@ package com.project.uber.uberApp.services.impl;
 import com.project.uber.uberApp.dto.DriverDto;
 import com.project.uber.uberApp.dto.SignupDto;
 import com.project.uber.uberApp.dto.UserDto;
-import com.project.uber.uberApp.entities.Rider;
 import com.project.uber.uberApp.entities.User;
 import com.project.uber.uberApp.entities.enums.Role;
 import com.project.uber.uberApp.exceptions.RuntimeConflictException;

@@ -1,15 +1,20 @@
 package com.project.uber.uberApp.entities;
 
 import com.project.uber.uberApp.entities.enums.PaymentMethod;
-import com.project.uber.uberApp.entities.enums.RideRequestStatus;
 import com.project.uber.uberApp.entities.enums.RideStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.awt.*;
 import java.time.LocalDateTime;
 
 @Entity
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class Ride {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

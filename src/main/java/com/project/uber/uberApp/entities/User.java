@@ -1,10 +1,10 @@
 package com.project.uber.uberApp.entities;
+
 import com.project.uber.uberApp.entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.sql.results.graph.Fetch;
 
 import java.util.Set;
 

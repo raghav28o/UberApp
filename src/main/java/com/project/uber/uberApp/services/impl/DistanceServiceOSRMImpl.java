@@ -2,12 +2,11 @@ package com.project.uber.uberApp.services.impl;
 
 import com.project.uber.uberApp.services.DistanceService;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import java.awt.*;
 import java.util.List;
-import org.locationtech.jts.geom.Point;
 
 
 @Service

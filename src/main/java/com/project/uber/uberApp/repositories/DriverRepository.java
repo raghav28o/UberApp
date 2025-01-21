@@ -1,13 +1,12 @@
 package com.project.uber.uberApp.repositories;
 
 import com.project.uber.uberApp.entities.Driver;
+import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.awt.*;
 import java.util.List;
-import org.locationtech.jts.geom.Point;
 
 //ST_DISTANCE
 //ST-DWITHIN
