@@ -6,7 +6,6 @@ import com.project.uber.uberApp.repositories.DriverRepository;
 import com.project.uber.uberApp.strategies.DriverMatchingStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.locationtech.jts.geom.Point;
 
 import java.util.List;
 @Service

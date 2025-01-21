@@ -12,8 +12,6 @@ import com.project.uber.uberApp.entities.enums.RideRequestStatus;
 import com.project.uber.uberApp.repositories.RideRequestRepository;
 import com.project.uber.uberApp.repositories.RiderRepository;
 import com.project.uber.uberApp.services.RiderService;
-import com.project.uber.uberApp.strategies.DriverMatchingStrategy;
-import com.project.uber.uberApp.strategies.RideFareCalculationStrategy;
 import com.project.uber.uberApp.strategies.RideStrategyManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
