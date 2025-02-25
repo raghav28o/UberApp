@@ -10,6 +10,7 @@ import com.project.uber.uberApp.entities.enums.RideRequestStatus;
 import com.project.uber.uberApp.entities.enums.RideStatus;
 import com.project.uber.uberApp.repositories.DriverRepository;
 import com.project.uber.uberApp.services.DriverService;
+import com.project.uber.uberApp.services.PaymentService;
 import com.project.uber.uberApp.services.RideRequestService;
 import com.project.uber.uberApp.services.RideService;
 import lombok.RequiredArgsConstructor;
