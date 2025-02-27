@@ -5,8 +5,10 @@ import com.project.uber.uberApp.entities.Ride;
 import com.project.uber.uberApp.entities.enums.PaymentStatus;
 import com.project.uber.uberApp.repositories.PaymentRepository;
 import com.project.uber.uberApp.services.PaymentService;
+import com.project.uber.uberApp.strategies.PaymentStrategyManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void processPayment(Ride ride) {
         Payment payment = paymentRepository.findByRide(ride)
-                .orElseThrow(() -> new ResourceNotFoundException("Payment not found for ride with id: "+ride.getId()));
+                .orElseThrow(() -> new ResourceAccessException("Payment not found for ride with id: "+ride.getId()));
         paymentStrategyManager.paymentStrategy(payment.getPaymentMethod()).processPayment(payment);
     }
 
@@ -27,7 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .ride(ride)
                 .paymentMethod(ride.getPaymentMethod())
                 .amount(ride.getFare())
-                .paymentStatus(PaymentStatus.PENDING)
+                .paymentStatus(PaymentStatus.Pending)
                 .build();
         return paymentRepository.save(payment);
     }
