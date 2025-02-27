@@ -2,6 +2,8 @@ package com.project.uber.uberApp.strategies.impl;
 
 import com.project.uber.uberApp.entities.Driver;
 import com.project.uber.uberApp.entities.Payment;
+import com.project.uber.uberApp.entities.enums.PaymentStatus;
+import com.project.uber.uberApp.entities.enums.TransactionMethod;
 import com.project.uber.uberApp.repositories.PaymentRepository;
 import com.project.uber.uberApp.services.WalletService;
 import com.project.uber.uberApp.strategies.PaymentStrategy;
@@ -21,9 +23,9 @@ public class CashPaymentStrategy implements PaymentStrategy {
         double platformCommission = payment.getAmount() * PLATFORM_COMMISSION;
 
         walletService.deductMoneyFromWallet(driver.getUser(), platformCommission, null,
-                payment.getRide(), TransactionMethod.RIDE);
+                payment.getRide(), TransactionMethod.Ride);
 
-        payment.setPaymentStatus(PaymentStatus.CONFIRMED);
+        payment.setPaymentStatus(PaymentStatus.Confirmed);
         paymentRepository.save(payment);
     }
 }
