@@ -8,16 +8,28 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.List;
+
 @RestControllerAdvice
 public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return false;
+        return true;
     }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        return null;
+        List<String> allowedRoutes = List.of("/v3/api-docs", "/actuator");
+
+        boolean isAllowed = allowedRoutes
+                .stream()
+                .anyMatch(route -> request.getURI().getPath().contains(route));
+
+        if(body instanceof ApiResponse<?> || isAllowed) {
+            return body;
+        }
+
+        return new ApiResponse<>();
     }
 
 //    @Override
