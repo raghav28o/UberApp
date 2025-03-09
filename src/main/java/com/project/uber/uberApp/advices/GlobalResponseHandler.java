@@ -28,7 +28,6 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         if(body instanceof ApiResponse<?> || isAllowed) {
             return body;
         }
-
         return new ApiResponse<>();
     }
 
