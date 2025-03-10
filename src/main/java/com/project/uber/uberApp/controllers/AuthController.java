@@ -1,5 +1,6 @@
 package com.project.uber.uberApp.controllers;
 
+import com.project.uber.uberApp.advices.ApiResponse;
 import com.project.uber.uberApp.dto.*;
 import com.project.uber.uberApp.services.AuthService;
 import jakarta.servlet.http.Cookie;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 
@@ -33,17 +35,23 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto,
-                                           HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public @ResponseBody LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto,
+                                                HttpServletResponse httpServletResponse) {
+        System.out.println("In login controller");
+
         String tokens[] = authService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+
+        if (tokens == null || tokens.length < 2) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
 
         Cookie cookie = new Cookie("token", tokens[1]);
         cookie.setHttpOnly(true);
-
         httpServletResponse.addCookie(cookie);
 
-        return ResponseEntity.ok(new LoginResponseDto(tokens[0]));
+        return new LoginResponseDto(tokens[0]);
     }
+
 
     @PostMapping("/refresh")
     public ResponseEntity<LoginResponseDto> refresh(HttpServletRequest request) {

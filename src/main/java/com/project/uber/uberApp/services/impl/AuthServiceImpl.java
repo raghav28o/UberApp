@@ -1,5 +1,6 @@
 package com.project.uber.uberApp.services.impl;
 
+import com.project.uber.uberApp.advices.ResourceNotFoundException;
 import com.project.uber.uberApp.dto.DriverDto;
 import com.project.uber.uberApp.dto.SignupDto;
 import com.project.uber.uberApp.dto.UserDto;
@@ -42,21 +43,32 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String[] login(String email, String password) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
+        System.out.println("in login service");
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+            System.out.println("Authentication: " + authentication);
 
-        User user = (User) authentication.getPrincipal();
+            User user = (User) authentication.getPrincipal();
+            System.out.println("user: " + user.toString());
 
-        String accessToken = jwtService.generateAccessToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
+            System.out.println("accessToken: " + accessToken);
+            System.out.println("refreshToken: " + refreshToken);
 
-        return new String[]{accessToken, refreshToken};
+            return new String[]{accessToken, refreshToken};
+        } catch (Exception e) {
+            System.out.println("Authentication failed: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public UserDto signup(SignupDto signupDto) {
+        System.out.println("In signup service");
         User user = userRepository.findByEmail(signupDto.getEmail()).orElse(null);
         if(user != null)
             throw new RuntimeConflictException("Cannot signup, User already exists with email "+signupDto.getEmail());
@@ -69,6 +81,7 @@ public class AuthServiceImpl implements AuthService {
 //        create user related entities
         riderService.createNewRider(savedUser);
         walletService.createNewWallet(savedUser);
+        System.out.println("End of signup service");
 
         return modelMapper.map(savedUser, UserDto.class);
     }
@@ -96,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String refreshToken(String refreshToken) {
         Long userId = jwtService.getUserIdFromToken(refreshToken);
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceAccessException("User not found " +
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found " +
                 "with id: "+userId));
 
         return jwtService.generateAccessToken(user);

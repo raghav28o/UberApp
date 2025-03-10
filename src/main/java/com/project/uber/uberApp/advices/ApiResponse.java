@@ -1,10 +1,12 @@
 package com.project.uber.uberApp.advices;
 
 import lombok.Data;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.time.LocalDateTime;
 
 @Data
+@ControllerAdvice
 public class ApiResponse<T> {
 
     //    @JsonFormat(pattern = "hh:mm:ss dd-MM-yyyy")
