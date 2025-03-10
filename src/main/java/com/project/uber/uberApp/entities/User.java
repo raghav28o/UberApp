@@ -2,10 +2,7 @@ package com.project.uber.uberApp.entities;
 
 import com.project.uber.uberApp.entities.enums.Role;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +20,8 @@ import java.util.stream.Collectors;
         @Index(name = "idx_user_email", columnList = "email")
 })
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
